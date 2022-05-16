@@ -2,10 +2,16 @@ package com.lyx297.springloginapp.controllers;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.lyx297.springloginapp.UserModelAssembler;
 import com.lyx297.springloginapp.entity.User;
 import com.lyx297.springloginapp.exceptions.UserNotFoundException;
 import com.lyx297.springloginapp.repository.UserRepository;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,40 +20,58 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.swing.text.html.parser.Entity;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
-class UserController {
+public class UserController {
 
     private final UserRepository repository;
+    private final UserModelAssembler assembler;
 
-    UserController(UserRepository repository) {
+    public UserController(UserRepository repository, UserModelAssembler assembler) {
         this.repository = repository;
+        this.assembler = assembler;
     }
 
 
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/users")
-    List<User> all() {
-        return repository.findAll();
+    public CollectionModel<EntityModel<User>> all() {
+        List<EntityModel<User>> users = repository.findAll().stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(users,
+                linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
     // end::get-aggregate-root[]
 
     @PostMapping("/users")
-    User newUser(@RequestBody User newUser) {
-        return repository.save(newUser);
+    public ResponseEntity<?> newUser(@RequestBody User newUser) {
+        EntityModel<User> entityModel = assembler.toModel(repository.save(newUser));
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
     }
 
     // Single item
 
     @GetMapping("/users/{id}")
-    User one(@PathVariable Long id) {
+    public EntityModel<User> one(@PathVariable Long id) {
 
-        return repository.findById(id)
+        User user = repository.findById(id) //
                 .orElseThrow(() -> new UserNotFoundException(id));
+
+        return assembler.toModel(user);
     }
 
     @PutMapping("/users/{id}")
-    User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
+    public User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
 
         return repository.findById(id)
                 .map(user -> {
@@ -62,7 +86,9 @@ class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         repository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
