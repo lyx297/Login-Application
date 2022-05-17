@@ -8,19 +8,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_id")
     private Long id;
 
-    @Column(name="user_name")
-    private String userName;
+    @Column(name="user_name", nullable = false, unique = true, length = 20)
+    private String username;
 
-    @Column(name="user_role")
-    private String userRole;
+    @Column(name="password", nullable = false, length = 255)
+    private String password;
 
     public User() {}
 
-    public User(String userName, String userRole) {
-        this.userName = userName;
-        this.userRole = userRole;
+    public User(String userName, String password) {
+        this.username = userName;
+        this.password = password;
     }
 
     public Long getId() {
@@ -31,20 +32,20 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUserRole() {
-        return userRole;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -52,20 +53,20 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(userRole, user.userRole);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, userRole);
+        return Objects.hash(id, username, password);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", role='" + userRole + '\'' +
+                ", userName='" + username + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

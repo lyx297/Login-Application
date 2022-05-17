@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.swing.text.html.parser.Entity;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -50,6 +48,7 @@ public class UserController {
     }
     // end::get-aggregate-root[]
 
+
     @PostMapping("/users")
     public ResponseEntity<?> newUser(@RequestBody User newUser) {
         EntityModel<User> entityModel = assembler.toModel(repository.save(newUser));
@@ -75,8 +74,8 @@ public class UserController {
 
         return repository.findById(id)
                 .map(user -> {
-                    user.setUserName(newUser.getUserName());
-                    user.setUserRole(newUser.getUserRole());
+                    user.setUsername(newUser.getUsername());
+                    user.setPassword(newUser.getPassword());
                     return repository.save(user);
                 })
                 .orElseGet(() -> {

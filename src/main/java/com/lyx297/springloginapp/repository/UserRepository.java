@@ -2,10 +2,14 @@ package com.lyx297.springloginapp.repository;
 
 import com.lyx297.springloginapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    @Query("SELECT u FROM User u WHERE u.username = :user_name")
+    User findByUsername(@Param("user_name") String username);
 }
 
