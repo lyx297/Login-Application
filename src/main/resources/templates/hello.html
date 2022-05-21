@@ -7,8 +7,9 @@
   </head>
   <body>
     <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-    <div th:if="${#authorization.expression('hasAuthority(''USER'')')}">Text visible to user.</div>
-    <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">Text visible to admin.</div>
+    <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+      Click <a th:href="@{/hello_manager}">here</a> to see a greeting.
+    </div>
     <form th:action="@{/logout}" method="post">
       <input type="submit" value="Sign Out"/>
     </form>
