@@ -4,15 +4,12 @@ package com.lyx297.springloginapp.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.lyx297.springloginapp.UserModelAssembler;
 import com.lyx297.springloginapp.entity.User;
 import com.lyx297.springloginapp.exceptions.UserNotFoundException;
 import com.lyx297.springloginapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 

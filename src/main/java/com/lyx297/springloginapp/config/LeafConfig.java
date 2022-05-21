@@ -1,4 +1,4 @@
-package com.lyx297.springloginapp;
+package com.lyx297.springloginapp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

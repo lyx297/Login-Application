@@ -1,6 +1,5 @@
 package com.lyx297.springloginapp.services;
 
-import com.lyx297.springloginapp.CustomUserDetails;
 import com.lyx297.springloginapp.entity.User;
 import com.lyx297.springloginapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

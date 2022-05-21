@@ -1,12 +1,12 @@
-package com.lyx297.springloginapp;
+package com.lyx297.springloginapp.controllers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
-import com.lyx297.springloginapp.controllers.UserController;
 import com.lyx297.springloginapp.entity.User;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public

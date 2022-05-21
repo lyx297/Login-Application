@@ -10,6 +10,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    public Role(String name) {
+        this.name = name;
+    }
+
     private String name;
 
     public Integer getId() {

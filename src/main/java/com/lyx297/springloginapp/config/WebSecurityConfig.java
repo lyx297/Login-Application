@@ -1,4 +1,4 @@
-package com.lyx297.springloginapp;
+package com.lyx297.springloginapp.config;
 
 import javax.sql.DataSource;
 
