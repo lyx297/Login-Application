@@ -14,6 +14,8 @@ public class Role {
         this.name = name;
     }
 
+    public Role() {};
+
     private String name;
 
     public Integer getId() {
