@@ -22,7 +22,7 @@ public class testUserRepository {
     private UserRepository repo;
 
     @Test
-    public void testCreateUser() {
+    public void testCreateNewUser() {
         User user = new User();
         user.setUsername("asdflpoi123");
         user.setPassword("asdlTfkj234045u78!@#$");
@@ -32,4 +32,17 @@ public class testUserRepository {
 
         assertThat(user.getUsername()).isEqualTo(existsUser.getUsername());
     }
+
+    @Test
+    public void testFindByUsernameMethodIsWorking() {
+        User user = new User();
+        user.setUsername("test");
+        user.setPassword("test1");
+
+        repo.save(user);
+
+        assertThat(repo.findByUsername("test").getUsername()).isEqualTo("test");
+        assertThat(repo.findByUsername("test").getPassword()).isEqualTo("test1");
+    }
+
 }
