@@ -36,22 +36,38 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         if (alreadySetup)
             return;
 
-        createRoleIfNotFound("ADMIN");
-        createRoleIfNotFound("USER");
+        createRoleIfNotFound("ROLE_ADMIN");
+        createRoleIfNotFound("ROLE_MANAGER");
+        createRoleIfNotFound("ROLE_USER");
 
-        Role adminRole = roleRepository.findByRoleName("ADMIN");
-        Role userRole = roleRepository.findByRoleName("USER");
+        Role adminRole = roleRepository.findByRoleName("ROLE_ADMIN");
+        Role managerRole = roleRepository.findByRoleName("ROLE_MANAGER");
+        Role userRole = roleRepository.findByRoleName("ROLE_USER");
         Set<Role> adminRoleSet = new HashSet<>();
         adminRoleSet.add(adminRole);
+        adminRoleSet.add(managerRole);
         adminRoleSet.add(userRole);
 
+        Set<Role> managerRoleSet = new HashSet<>();
+        managerRoleSet.add(managerRole);
+        managerRoleSet.add(userRole);
+
         User admin = new User();
+        admin.setName("Harry");
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("admin1"));
         admin.setRoles(adminRoleSet);
         userRepository.save(admin);
 
+        User manager = new User();
+        manager.setName("Hermione");
+        manager.setUsername("manager");
+        manager.setPassword(passwordEncoder.encode("manager1"));
+        manager.setRoles(managerRoleSet);
+        userRepository.save(manager);
+
         User user = new User();
+        user.setName("Ron");
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("user1"));
         user.setRoles(Arrays.asList(userRole));

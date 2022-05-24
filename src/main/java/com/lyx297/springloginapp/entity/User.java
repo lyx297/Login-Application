@@ -12,6 +12,11 @@ public class User {
     @Column(name="user_id")
     private Long userId;
 
+
+
+    @Column(name="name", nullable = false, length = 255)
+    private String name;
+
     @Column(name="username", nullable = false, unique = true, length = 20)
     private String username;
 
@@ -36,13 +41,22 @@ public class User {
 
     public User() {}
 
-    public User(String userName, String password) {
+    public User(String name, String userName, String password) {
+        this.name = name;
         this.username = userName;
         this.password = password;
     }
 
     public Long getUserId() {
         return userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -66,20 +80,21 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+        return name.equals(user.name) && username.equals(user.username) && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, password);
+        return Objects.hash(name, username, password);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + userId +
-                ", userName='" + username + '\'' +
+                "name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }
