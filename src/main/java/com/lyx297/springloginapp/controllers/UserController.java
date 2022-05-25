@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,4 +62,11 @@ public class UserController {
 
         return assembler.toModel(user);
     }
+
+    public String getName(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return principal.getName();
+
+    }
+
 }

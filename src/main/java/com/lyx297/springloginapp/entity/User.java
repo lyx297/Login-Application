@@ -12,8 +12,6 @@ public class User {
     @Column(name="user_id")
     private Long userId;
 
-
-
     @Column(name="name", nullable = false, length = 255)
     private String name;
 

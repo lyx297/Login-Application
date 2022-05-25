@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -28,6 +29,17 @@ public class CustomUserDetails implements UserDetails {
         }
 
         return authorities;
+    }
+    public String getName() {
+        return user.getName();
+    }
+
+    public String getRoles() {
+        Collection<Role> roles = user.getRoles();
+        String listOfRoles = roles.stream()
+                .map(Role::getRoleName)
+                .collect(Collectors.joining(", "));
+        return listOfRoles;
     }
 
     @Override
