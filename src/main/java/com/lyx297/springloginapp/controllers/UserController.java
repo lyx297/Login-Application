@@ -10,10 +10,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,13 +28,6 @@ public class UserController {
     public UserController(UserRepository repository, UserModelAssembler assembler) {
         this.repository = repository;
         this.assembler = assembler;
-    }
-
-    @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
     }
 
     // Aggregate root
@@ -62,11 +52,4 @@ public class UserController {
 
         return assembler.toModel(user);
     }
-
-    public String getName(HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-        return principal.getName();
-
-    }
-
 }
