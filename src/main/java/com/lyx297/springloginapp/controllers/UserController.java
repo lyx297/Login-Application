@@ -7,9 +7,9 @@ import com.lyx297.springloginapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +42,15 @@ public class UserController {
                 linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
     // end::get-aggregate-root[]
+
+    @PostMapping("/users")
+    public ResponseEntity<?> newUser(@RequestBody User newUser) {
+        EntityModel<User> entityModel = assembler.toModel(repository.save(newUser));
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+                .body(entityModel);
+    }
 
     // Single item
     @GetMapping("/users/{id}")

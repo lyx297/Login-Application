@@ -30,6 +30,7 @@ public class CustomUserDetails implements UserDetails {
 
         return authorities;
     }
+
     public String getName() {
         return user.getName();
     }

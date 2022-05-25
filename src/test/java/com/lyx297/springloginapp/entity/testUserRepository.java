@@ -24,6 +24,7 @@ public class testUserRepository {
     @Test
     public void testCreateNewUser() {
         User user = new User();
+        user.setName("namenamename");
         user.setUsername("asdflpoi123");
         user.setPassword("asdlTfkj234045u78!@#$");
 
@@ -36,6 +37,7 @@ public class testUserRepository {
     @Test
     public void testFindByUsernameMethodIsWorking() {
         User user = new User();
+        user.setName("testName");
         user.setUsername("test");
         user.setPassword("test1");
 

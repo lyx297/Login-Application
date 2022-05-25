@@ -58,8 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
-                .antMatchers("/welcome").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER")
-                .antMatchers("/welcome-manager").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
+                .antMatchers("/welcome").hasAuthority("ROLE_USER")
+                .antMatchers("/welcome-manager").hasAuthority("ROLE_MANAGER")
                 .antMatchers("/users").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
